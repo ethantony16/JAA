@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen p-8 text-gray-800 dark:bg-gradient-to-br dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 dark:text-gray-100 transition-colors duration-300">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-10 flex justify-between items-center">
+            <div class="text-center w-full">
+                <h1
+                    class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 mb-2">
+                    Job Application Assistant</h1>
+                <p class="text-gray-600 dark:text-gray-300">Tailor your resume, cover letter, and interview prep in
+                    seconds with AI.</p>
+            </div>
+            <button id="themeToggle"
+                class="absolute top-8 right-8 p-2 rounded-full bg-white/50 dark:bg-black/50 hover:bg-white/80 dark:hover:bg-black/80 transition shadow-lg">
+                <!-- Sun Icon -->
+                <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 hidden" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <!-- Moon Icon -->
+                <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+        </header>
+
+        <div class="glass rounded-2xl shadow-xl p-8 mb-8 transition-colors duration-300">
+            <form id="uploadForm" class="space-y-6">
+                <!-- Job Description -->
+                <div>
+                    <label for="jobDescription"
+                        class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Job
+                        Description</label>
+                    <textarea id="jobDescription" name="job_description" rows="6"
+                        class="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition bg-white/50 dark:bg-gray-800/50 resize-none dark:text-white"
+                        placeholder="Paste the full job description here..."></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Resume Upload -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Resume</label>
+                        <div class="relative group">
+                            <input type="file" id="resume" name="resume"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                accept=".pdf,.docx">
+                            <div
+                                class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center group-hover:border-indigo-500 transition bg-white/30 dark:bg-gray-800/30">
+                                <div class="text-indigo-500 dark:text-indigo-400 mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-gray-600 dark:text-gray-300" id="resumeName">Upload Resume
+                                    (PDF/DOCX)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cover Letter Upload -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Generic Cover
+                            Letter</label>
+                        <div class="relative group">
+                            <input type="file" id="coverLetter" name="cover_letter"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                accept=".pdf,.docx">
+                            <div
+                                class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center group-hover:border-purple-500 transition bg-white/30 dark:bg-gray-800/30">
+                                <div class="text-purple-500 dark:text-purple-400 mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-gray-600 dark:text-gray-300" id="coverName">Upload Cover Letter
+                                    (PDF/DOCX)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200">
+                    Generate Documents
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Area -->
+        <div id="results" class="hidden glass rounded-2xl shadow-xl p-8 animate-fade-in transition-colors duration-300">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Your Documents are Ready!</h2>
+            <div id="downloadLinks" class="space-y-3">
+                <!-- Links will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark Mode Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const html = document.documentElement;
+
+        // Check local storage for theme preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                localStorage.theme = 'dark';
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                localStorage.theme = 'light';
+            }
+        });
+
+        const resumeInput = document.getElementById('resume');
+        const coverInput = document.getElementById('coverLetter');
+
+        resumeInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) document.getElementById('resumeName').textContent = e.target.files[0].name;
+        });
+
+        coverInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) document.getElementById('coverName').textContent = e.target.files[0].name;
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+
+            btn.textContent = 'Processing... (This may take a minute)';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const contentDisposition = response.headers.get('Content-Disposition');
+                    let filename = "Application_Files.zip";
+                    if (contentDisposition && contentDisposition.indexOf('attachment') !== -1) {
+                        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                        const matches = filenameRegex.exec(contentDisposition);
+                        if (matches != null && matches[1]) {
+                            filename = matches[1].replace(/['"]/g, '');
+                        }
+                    }
+
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    alert('Documents generated and downloaded!');
+                } else {
+                    const err = await response.text();
+                    alert('Error: ' + err);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred.');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+
+</html>
